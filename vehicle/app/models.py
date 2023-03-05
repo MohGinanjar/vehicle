@@ -49,8 +49,8 @@ class FleetVehicle(models.Model):
     net_car_value = models.FloatField(blank=True, null=True)
     residual_value = models.FloatField(blank=True, null=True)
     frame_size = models.FloatField(blank=True, null=True)
-    driver_employee = models.ForeignKey('HrEmployee', models.DO_NOTHING, blank=True, null=True)
-    future_driver_employee = models.ForeignKey('HrEmployee', models.DO_NOTHING, blank=True, null=True)
+    driver_employee = models.ForeignKey('HrEmployee', models.DO_NOTHING, blank=True, null=True, related_name='driver_employee')
+    future_driver_employee = models.ForeignKey('HrEmployee', models.DO_NOTHING, blank=True, null=True ,related_name='future_driver_employee')
     mobility_card = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
@@ -167,7 +167,7 @@ class HrEmployee(models.Model):
     class Meta:
         managed = False
         db_table = 'hr_employee'
-        unique_together = (('user', 'company'),)
+        #unique_together = (('user', 'company'),)
 
 
 class TrxFleetWorkingVehicleDriver(models.Model):
@@ -230,11 +230,11 @@ class FleetVehicleOdometer(models.Model):
         
 class FleetVehicleTag(models.Model):
     color = models.IntegerField(blank=True, null=True)
-    name = models.CharField(unique=True)
+    name = models.CharField(unique=True, max_length=100)
     create_date = models.DateTimeField(blank=True, null=True)
     write_date = models.DateTimeField(blank=True, null=True)
-    create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
-    write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
+    # create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
+    # write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
 
     class Meta:
         managed = False
