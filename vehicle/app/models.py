@@ -53,9 +53,9 @@ class FleetVehicle(models.Model):
     future_driver_employee = models.ForeignKey('HrEmployee', models.DO_NOTHING, blank=True, null=True ,related_name='future_driver_employee')
     mobility_card = models.CharField(max_length=100, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'fleet_vehicle'
+    # class Meta:
+    #     managed = True
+    #     db_table = 'app.fleet_vehicle'
 
 
 class FleetVehicleModelBrand(models.Model):
@@ -66,9 +66,9 @@ class FleetVehicleModelBrand(models.Model):
     #create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
     #write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'fleet_vehicle_model_brand'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'fleet_vehicle_model_brand'
 
 
 class FleetVehicleModelCategory(models.Model):
@@ -79,9 +79,9 @@ class FleetVehicleModelCategory(models.Model):
     #create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
     #write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'fleet_vehicle_model_category'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'fleet_vehicle_model_category'
 
 
 class TrxFleetDriver(models.Model):
@@ -90,9 +90,9 @@ class TrxFleetDriver(models.Model):
     driver_id = models.CharField(max_length=50, blank=True, null=True)
     driver_name = models.CharField(max_length=50, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'trx_fleet_driver'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'trx_fleet_driver'
 
 
 class HrEmployee(models.Model):
@@ -164,9 +164,9 @@ class HrEmployee(models.Model):
     last_check_in = models.DateTimeField(blank=True, null=True)
     last_check_out = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'hr_employee'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'hr_employee'
         #unique_together = (('user', 'company'),)
 
 
@@ -180,9 +180,9 @@ class TrxFleetWorkingVehicleDriver(models.Model):
     end_time = models.TimeField(blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'trx_fleet_working_vehicle_driver'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'trx_fleet_working_vehicle_driver'
 
 
 class FleetVehicleModel(models.Model):
@@ -209,9 +209,9 @@ class FleetVehicleModel(models.Model):
     # create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
     # write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'fleet_vehicle_model'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'fleet_vehicle_model'
 
 
 class FleetVehicleOdometer(models.Model):
@@ -224,9 +224,9 @@ class FleetVehicleOdometer(models.Model):
     # create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
     # write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'fleet_vehicle_odometer'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'fleet_vehicle_odometer'
         
 class FleetVehicleTag(models.Model):
     color = models.IntegerField(blank=True, null=True)
@@ -236,6 +236,6 @@ class FleetVehicleTag(models.Model):
     # create_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='create_uid', blank=True, null=True)
     # write_uid = models.ForeignKey('ResUsers', models.DO_NOTHING, db_column='write_uid', blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'fleet_vehicle_tag'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'fleet_vehicle_tag'
