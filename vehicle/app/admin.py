@@ -8,7 +8,7 @@ class MasterCompanyAdmin( admin.ModelAdmin):
     pass
 
 
-@admin.register(FleetVehicleModelBrand)
+@admin.register(VehicleBrand)
 class MasterCompanyAdmin( admin.ModelAdmin):
     pass
 
@@ -16,27 +16,18 @@ class MasterCompanyAdmin( admin.ModelAdmin):
 class MasterCompanyAdmin( admin.ModelAdmin):
     pass
 
-@admin.register(TrxFleetDriver)
+@admin.register(VehicleType)
 class MasterCompanyAdmin( admin.ModelAdmin):
     pass
-
-@admin.register(HrEmployee)
-class MasterCompanyAdmin( admin.ModelAdmin):
-    pass
-
-@admin.register(TrxFleetWorkingVehicleDriver)
-class MasterCompanyAdmin( admin.ModelAdmin):
-    pass
-
-@admin.register(FleetVehicleModel)
-class MasterCompanyAdmin( admin.ModelAdmin):
-    pass
-
 
 @admin.register(FleetVehicleOdometer)
 class MasterCompanyAdmin( admin.ModelAdmin):
     pass
 
-@admin.register(FleetVehicleTag)
+@admin.register(VehicleEmployee)
+class MasterCompanyAdmin( admin.ModelAdmin):
+    pass
+
+@admin.register(FleetVehicleModel)
 class MasterCompanyAdmin( admin.ModelAdmin):
     pass

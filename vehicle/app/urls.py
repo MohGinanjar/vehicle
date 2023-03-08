@@ -3,5 +3,5 @@ from .views import *
 
 
 urlpatterns = [
-    path('list-vehicle/', ListFleetVehicle.as_view(), name="list-vehicle"),
+    path('api2/public/workplan/viewVehicleDriver', ListFleetVehicle.as_view(), name="list-vehicle"),
 ]
