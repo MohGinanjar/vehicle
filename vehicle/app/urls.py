@@ -10,4 +10,5 @@ urlpatterns = [
     path('api2/public/workplan/viewRotation', ListVehicleRotation.as_view(), name="rotation-vehicle"),
     path('api2/public/workplan/setRotation', RotationVehicleCreateView.as_view(), name="create-rotation-vehicle"),
     path('api2/public/workplan/deleteRotation', RotationVehicleDelete.as_view(), name="delete-rotation-vehicle"),
+    path('api2/public/workplan/clockIn', TimeSheetCreateView.as_view(), name="timesheet"),
 ]

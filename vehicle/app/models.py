@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User, Group
 
 
 
@@ -63,6 +64,15 @@ class FleetVehicle(models.Model):
 class VehicleRotation(models.Model):
     vehicle = models.ForeignKey(FleetVehicle, related_name='vehicle_rotation', on_delete=models.CASCADE)
     value_rotation = models.FloatField(default=0.0)
+    
+    
+
+class TimeSheet(models.Model):
+    user = models.ForeignKey(User, related_name='user_timesheet', on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    category = models.CharField(max_length=3)
+    notes = models.TextField()
     
 
 

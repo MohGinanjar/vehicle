@@ -1,4 +1,4 @@
-from .models import FleetVehicle, VehicleEmployee, FleetVehicleOdometer, FleetVehicleModelCategory, VehicleRotation
+from .models import FleetVehicle, VehicleEmployee, FleetVehicleOdometer, FleetVehicleModelCategory, VehicleRotation, TimeSheet
 from rest_framework import serializers
 
 class DriverSerializer(serializers.ModelSerializer):
@@ -82,6 +82,12 @@ class VehicleRotationSerializers(serializers.ModelSerializer):
 class RotationSerializers(serializers.ModelSerializer):
     class Meta:
         model = VehicleRotation
+        fields = '__all__'
+        
+
+class TimeSheetSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = TimeSheet
         fields = '__all__'
         
 

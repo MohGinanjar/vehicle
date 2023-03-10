@@ -116,6 +116,11 @@ class FleetVehicleCreateView(generics.CreateAPIView):
 class RotationVehicleCreateView(generics.CreateAPIView):
     queryset = VehicleRotation.objects.all()
     serializer_class = RotationSerializers
+
+
+class TimeSheetCreateView(generics.CreateAPIView):
+    queryset = TimeSheet.objects.all()
+    serializer_class = TimeSheetSerializers
     
     
 
