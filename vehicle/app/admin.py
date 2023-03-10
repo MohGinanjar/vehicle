@@ -31,3 +31,7 @@ class MasterCompanyAdmin( admin.ModelAdmin):
 @admin.register(FleetVehicleModel)
 class MasterCompanyAdmin( admin.ModelAdmin):
     pass
+
+@admin.register(VehicleRotation)
+class MasterCompanyAdmin( admin.ModelAdmin):
+    pass

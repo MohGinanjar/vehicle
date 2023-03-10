@@ -18,6 +18,15 @@ class ListFleetVehicleCategory(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id']
     
+    
+
+class ListVehicleRotation(generics.ListAPIView):
+    #permission_classes = (IsAuthenticated,)
+    queryset = FleetVehicle.objects.all().order_by('-id')
+    serializer_class = FleetVehicleSerializers
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
+    
 
 
 class ListFleetVehicle(generics.ListAPIView):
@@ -102,3 +111,30 @@ class FleetVehicleDelete(generics.DestroyAPIView):
 class FleetVehicleCreateView(generics.CreateAPIView):
     queryset = FleetVehicle.objects.all()
     serializer_class = VehicleFleetSerializers
+    
+
+class RotationVehicleCreateView(generics.CreateAPIView):
+    queryset = VehicleRotation.objects.all()
+    serializer_class = RotationSerializers
+    
+    
+
+class RotationVehicleDelete(generics.DestroyAPIView):
+    queryset = VehicleRotation.objects.all()
+    serializer_class = RotationSerializers
+    
+    def get_driver(self, request):
+        try:
+            rotationID=request.query_params.get('rotationID', None)
+            return VehicleRotation.objects.get(pk=rotationID)
+        except:
+            return None
+        
+    def delete(self, request, *args, **kwargs):
+        rotationID=request.query_params.get('rotationID', None)
+        driver = self.get_driver(request=request)
+        if driver != None:
+            driver.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({"status": "fail", "message": f"Vehicle Rotation with Id: {rotationID}  not found"}, status=status.HTTP_404_NOT_FOUND)

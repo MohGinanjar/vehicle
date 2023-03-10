@@ -60,8 +60,9 @@ class FleetVehicle(models.Model):
     location = models.CharField(max_length=100)
     odomoter = models.ForeignKey(FleetVehicleOdometer, related_name='odomoter', on_delete=models.CASCADE)
 
-    
-    
+class VehicleRotation(models.Model):
+    vehicle = models.ForeignKey(FleetVehicle, related_name='vehicle_rotation', on_delete=models.CASCADE)
+    value_rotation = models.FloatField(default=0.0)
     
 
 
