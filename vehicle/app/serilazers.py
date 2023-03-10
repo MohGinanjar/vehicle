@@ -1,9 +1,16 @@
-from .models import FleetVehicle, VehicleEmployee, FleetVehicleOdometer
+from .models import FleetVehicle, VehicleEmployee, FleetVehicleOdometer, FleetVehicleModelCategory
 from rest_framework import serializers
 
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = VehicleEmployee
+        fields = '__all__'
+        
+
+
+class VehicleCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FleetVehicleModelCategory
         fields = '__all__'
 
 class FleetVehicleSerializers(serializers.ModelSerializer):
@@ -54,5 +61,11 @@ class FleetVehicleSerializers(serializers.ModelSerializer):
         del data['driver']
         del data['id']
         return data
+    
+
+class VehicleFleetSerializers(serializers.ModelSerializer):
+    class Meta :
+        model = FleetVehicle
+        fields = '__all__'
 
 
