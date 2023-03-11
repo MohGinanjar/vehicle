@@ -14,25 +14,25 @@ services:
       - 8000
     env_file:
       - ./.env.dev
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     restart: always
 
       
-  db:
-    image: postgres:13.0-alpine
-    container_name: docker_postgres_apps
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=project
-      - POSTGRES_PASSWORD=project.1001
-      - POSTGRES_DB=project_db
-    env_file:
-      - ./.env.dev
-    restart: always
-    ports:
-      - 5435:5432
+  # db:
+  #   image: postgres:13.0-alpine
+  #   container_name: docker_postgres_apps
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
+  #   environment:
+  #     - POSTGRES_USER=odoo
+  #     - POSTGRES_PASSWORD=St4rP@ssw0rd
+  #     - POSTGRES_DB=postgres
+  #   env_file:
+  #     - ./.env.dev
+  #   restart: always
+  #   ports:
+  #     - 5432:5432
     
   
   nginx:
