@@ -23,9 +23,12 @@ import os
 SECRET_KEY = 'django-insecure-p&h#h#_ubs3ls375l(2v(iqdy^pqt4fq_s4_0i*l0253erz(-t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 # Application definition
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'app',
     'rest_framework',
 ]
@@ -118,12 +122,31 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Jakarta'
 
 USE_I18N = True
 
 USE_TZ = True
 
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:5000', 'http://103.157.96.10:5000', 'http://localhost:5000']
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://103.157.96.10:5000'
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://103.157.96.10:5000'
+    
+]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://103.157.96.10:5000'
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -134,3 +157,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_HEADERS = [
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+]
