@@ -11,34 +11,12 @@ from django.shortcuts import get_object_or_404
 from .serilazers import MyTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
+from django.http import JsonResponse
 
-# # Create your views here.
-
-
-# class LoginAuthView(TokenObtainPairView):
-#     serializer_class = MyTokenObtainPairSerializer
-
-
-# class ListFleetVehicleCategory(generics.ListAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset = FleetVehicleModelCategory.objects.all().order_by('-id')
-#     serializer_class = VehicleCategorySerializer
-#     filter_backends = [DjangoFilterBackend]
-#     filterset_fields = ['id']
-    
-
-# class ListVehicleRotation(generics.ListAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset = FleetVehicle.objects.all().order_by('-id')
-#     serializer_class = FleetVehicleSerializers
-#     filter_backends = [DjangoFilterBackend]
-#     filterset_fields = ['id']
-    
-
-
+### 1.1.3
 class ListFleetVehicle(generics.ListAPIView):
     #permission_classes = (IsAuthenticated,)
-    queryset = FleetVehicle.objects.all().order_by('-id')
+    queryset = FleetVehicle.objects.all().order_by('id')
     serializer_class = VehicleFleetSerializers
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id']
@@ -72,84 +50,42 @@ class ListFleetVehicle(generics.ListAPIView):
             }
         })
 
+#### 1.1.4
 
+class TrxFleetWorkingVehicleDriverView(generics.GenericAPIView):
+    #permission_classes = (IsAuthenticated,)
+    queryset = TrxFleetWorkingVehicleDriver.objects.all().order_by('id')
+    serializer_class = TrxFleetWorkingVehicleDriverSerializers
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['vehicle_id', 'drive_id', 'start_date', 'end_date']
     
-    
-# class FleetVehicleDelete(generics.DestroyAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset1 = FleetVehicle.objects.all()
-#     queryset2 = VehicleEmployee.objects.all()
-#     serializer_class1 = FleetVehicleSerializers
-#     serializer_class2 = DriverSerializer
-    
-#     # def destroy(self, request, *args, **kwargs):
-#     #     vehicleId=request.query_params.get('vehicleID', None)
-#     #     driverID=request.query_params.get('driverID', None)
-    
-#     def get_vehicle(self, request):
-#         try:
-#             vehicleId=request.query_params.get('vehicleID', None)
-#             return FleetVehicle.objects.get(pk=vehicleId)
-#         except:
-#             return None
-    
-#     def get_driver(self, request):
-#         try:
-#             vehicleId=request.query_params.get('driverID', None)
-#             return VehicleEmployee.objects.get(pk=vehicleId)
-#         except:
-#             return None
-    
-    
-#     def delete(self, request, *args, **kwargs):
-#         vehicleId=request.query_params.get('vehicleID', None)
-#         driverID=request.query_params.get('driverID', None)
-#         note = self.get_vehicle(request=request)
-#         driver = self.get_driver(request=request)
-#         if note and driver != None:
-#             note.delete()
-#             driver.delete()
-#             return Response(status=status.HTTP_204_NO_CONTENT)
-#         else:
-#             return Response({"status": "fail", "message": f"Vehicle with Id: {vehicleId} and Driver {driverID} not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
-# class FleetVehicleCreateView(generics.CreateAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset = FleetVehicle.objects.all()
-#     serializer_class = VehicleFleetSerializers
-    
-
-# class RotationVehicleCreateView(generics.CreateAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset = VehicleRotation.objects.all()
-#     serializer_class = RotationSerializers
-
-
-# class TimeSheetCreateView(generics.CreateAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset = TimeSheet.objects.all()
-#     serializer_class = TimeSheetSerializers
-    
-    
-
-# class RotationVehicleDelete(generics.DestroyAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     queryset = VehicleRotation.objects.all()
-#     serializer_class = RotationSerializers
-    
-#     def get_driver(self, request):
-#         try:
-#             rotationID=request.query_params.get('rotationID', None)
-#             return VehicleRotation.objects.get(pk=rotationID)
-#         except:
-#             return None
-        
-#     def delete(self, request, *args, **kwargs):
-#         rotationID=request.query_params.get('rotationID', None)
-#         driver = self.get_driver(request=request)
-#         if driver != None:
-#             driver.delete()
-#             return Response(status=status.HTTP_204_NO_CONTENT)
-#         else:
-#             return Response({"status": "fail", "message": f"Vehicle Rotation with Id: {rotationID}  not found"}, status=status.HTTP_404_NOT_FOUND)
+    def get(self, request):
+        vehicle_id = self.request.query_params.get('vehicleID', None)
+        drive_id = self.request.query_params.get('driverID', None)
+        date = self.request.query_params.get('date', None)
+        trx = TrxFleetWorkingVehicleDriver.objects.filter(vehicle_id=vehicle_id, drive_id=drive_id, start_date=date ,end_date=date)
+        if trx.exists():
+            if trx[0].order == 0:
+                return JsonResponse({
+                'error':"10014",
+                'message': 'Record cannot be processed. Please Validate Your Input.',})
+        else:   
+            return JsonResponse({
+            'error':"10007",
+            'message': 'Record Does Not Exist. Please Validate Your Input.',})
+     ### 1.1.5       
+    def delete(self, request):
+        vehicle_id = self.request.query_params.get('vehicleID', None)
+        print(vehicle_id)
+        # drive_id = self.request.query_params.get('driverID', None)
+        # date = self.request.query_params.get('date', None)
+        # trx = TrxFleetWorkingVehicleDriver.objects.filter(vehicle_id=vehicle_id, drive_id=drive_id, start_date=date ,end_date=date)
+        # if trx.exists():
+        #     if trx[0].order == 0:
+        #         return JsonResponse({
+        #         'error':"10014",
+        #         'message': 'Record cannot be processed. Please Validate Your Input.',})
+        # else:   
+        return JsonResponse({
+        'error':"10007",
+        'message': 'Record Does Not Exist. Please Validate Your Input.',})
