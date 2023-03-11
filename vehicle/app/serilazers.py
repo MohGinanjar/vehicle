@@ -113,3 +113,9 @@ class TrxFleetLookupSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrxFleetLookup
         fields = '__all__'
+
+
+class TrxFleetWorkingTimesheetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrxFleetWorkingTimesheet
+        fields = '__all__'

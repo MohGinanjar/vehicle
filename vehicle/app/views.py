@@ -141,7 +141,19 @@ class viewRotation(generics.ListCreateAPIView):
         
         serializer = TrxFleetLookupSerializer(data=request.data)
         if serializer.is_valid():
-            question = serializer.save()
-            serializer = TrxFleetLookupSerializer(question)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class clockIn(generics.ListCreateAPIView):
+    queryset = TrxFleetWorkingTimesheet.objects.all().order_by('id')
+    serializer_class = TrxFleetWorkingTimesheetSerializer
+    
+    def post(self, request, *args, **kwargs):
+        
+        serializer = TrxFleetWorkingTimesheetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
