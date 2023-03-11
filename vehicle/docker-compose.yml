@@ -1,0 +1,61 @@
+version: '3.3'
+
+services:
+  web:
+    build: .
+    # command: python manage.py runserver 0.0.0.0:8000
+    container_name: docker_django_apps
+    command: gunicorn vehicle.wsgi:application -w 2 -b 0.0.0.0:8000 --reload
+    volumes:
+      - ./:/home/app/web
+      # - static_volume:/home/app/web/static
+      # - media_volume:/home/app/web/media
+    expose:
+      - 8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+    restart: always
+
+      
+  db:
+    image: postgres:13.0-alpine
+    container_name: docker_postgres_apps
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=project
+      - POSTGRES_PASSWORD=project.1001
+      - POSTGRES_DB=project_db
+    env_file:
+      - ./.env.dev
+    restart: always
+    ports:
+      - 5435:5432
+    
+  
+  nginx:
+    build: ./nginx
+    container_name: docker_nginx_apps
+    volumes:
+      - ./static:/home/app/web/static
+      - ./media:/home/app/web/media
+    ports:
+      - 5000:80
+    depends_on:
+      - web
+    restart: always
+    
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+# networks:
+#   local_network:
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: 172.28.0.0/16

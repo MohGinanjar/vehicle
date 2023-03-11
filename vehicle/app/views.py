@@ -18,7 +18,6 @@ class ListFleetVehicleCategory(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id']
     
-    
 
 class ListVehicleRotation(generics.ListAPIView):
     #permission_classes = (IsAuthenticated,)
