@@ -7,12 +7,19 @@ from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.mixins import RetrieveModelMixin, DestroyModelMixin
 from django.shortcuts import get_object_or_404
+from dashboard.serializers import MyTokenObtainPairSerializer, LoginSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 
+class LoginAuthView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
 class ListFleetVehicleCategory(generics.ListAPIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = FleetVehicleModelCategory.objects.all().order_by('-id')
     serializer_class = VehicleCategorySerializer
     filter_backends = [DjangoFilterBackend]
@@ -20,7 +27,7 @@ class ListFleetVehicleCategory(generics.ListAPIView):
     
 
 class ListVehicleRotation(generics.ListAPIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = FleetVehicle.objects.all().order_by('-id')
     serializer_class = FleetVehicleSerializers
     filter_backends = [DjangoFilterBackend]
@@ -29,7 +36,7 @@ class ListVehicleRotation(generics.ListAPIView):
 
 
 class ListFleetVehicle(generics.ListAPIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = FleetVehicle.objects.all().order_by('-id')
     serializer_class = FleetVehicleSerializers
     filter_backends = [DjangoFilterBackend]
@@ -70,6 +77,7 @@ class ListFleetVehicle(generics.ListAPIView):
     
     
 class FleetVehicleDelete(generics.DestroyAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset1 = FleetVehicle.objects.all()
     queryset2 = VehicleEmployee.objects.all()
     serializer_class1 = FleetVehicleSerializers
@@ -108,22 +116,26 @@ class FleetVehicleDelete(generics.DestroyAPIView):
 
 
 class FleetVehicleCreateView(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = FleetVehicle.objects.all()
     serializer_class = VehicleFleetSerializers
     
 
 class RotationVehicleCreateView(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = VehicleRotation.objects.all()
     serializer_class = RotationSerializers
 
 
 class TimeSheetCreateView(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = TimeSheet.objects.all()
     serializer_class = TimeSheetSerializers
     
     
 
 class RotationVehicleDelete(generics.DestroyAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = VehicleRotation.objects.all()
     serializer_class = RotationSerializers
     

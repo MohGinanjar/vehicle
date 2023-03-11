@@ -1,5 +1,17 @@
 from .models import FleetVehicle, VehicleEmployee, FleetVehicleOdometer, FleetVehicleModelCategory, VehicleRotation, TimeSheet
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['id'] = self.user.id
+        data['username'] = self.user.username
+        data['email'] = self.user.email
+        data['token'] = str(refresh.access_token)
+        return data
 
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:
