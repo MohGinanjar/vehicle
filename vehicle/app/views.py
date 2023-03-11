@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.mixins import RetrieveModelMixin, DestroyModelMixin
 from django.shortcuts import get_object_or_404
-from dashboard.serializers import MyTokenObtainPairSerializer, LoginSerializer
+# fro import MyTokenObtainPairSerializer, LoginSerializer
+from .serilazers import MyTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated
 
